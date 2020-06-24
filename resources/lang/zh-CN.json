@@ -72,7 +72,16 @@
     "Sys notice": "站点公告",
     "Sys footer": "页脚自定义代码",
     "Sys in stock monitor": "库存告警监控",
-    "Sys manage email": "网站管理员邮箱"
+    "Sys manage email": "网站管理员邮箱",
+
+    "Mail driver" : "发件协议",
+    "Mail host" : "邮件服务器地址",
+    "Mail port" : "端口",
+    "Mail username" : "发件账号",
+    "Mail password" : "发件密码",
+    "Mail encryption" : "加密协议",
+    "Sys Langs" : "前台语言"
+
 
 
 }

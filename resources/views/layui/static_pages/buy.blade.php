@@ -72,7 +72,7 @@
                                             </div>
 
                                         </div>
-                                            @if(!empty($other_ipu) && is_array($other_ipu))
+                                            @if($pd_type == 2 && is_array($other_ipu))
                                                 @foreach($other_ipu as $ipu)
                                                     <div class="layui-form-item">
                                                         <label class="layui-form-label">{{ $ipu['desc'] }}</label>

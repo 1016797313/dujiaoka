@@ -11,16 +11,19 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::group(['middleware' => ['switch.language']], function () {
+    Route::get('/', 'HomeController@index');
+    Route::get('buy/{product}', 'HomeController@buy');
+    Route::get('bill/{orderid}', 'HomeController@bill');
+    Route::post('postOrder', 'HomeController@postOrder');
+    Route::get('getOrderStatus/{orderid}', 'OrdersController@getOrderStatus');
+    Route::get('searchOrder', 'OrdersController@searchOrder');
+    Route::match(['get', 'post'], 'searchOrderById/{oid?}', 'OrdersController@searchOrderById');
+    Route::post('searchOrderByAccount', 'OrdersController@searchOrderByAccount');
+    Route::get('searchOrderByBrowser', 'OrdersController@searchOrderByBrowser');
+});
 
-Route::get('buy/{product}', 'HomeController@buy');
-Route::get('bill/{orderid}', 'HomeController@bill');
-Route::post('postOrder', 'HomeController@postOrder');
-Route::get('getOrderStatus/{orderid}', 'OrdersController@getOrderStatus');
-Route::get('searchOrder', 'OrdersController@searchOrder');
-Route::match(['get', 'post'], 'searchOrderById/{oid?}', 'OrdersController@searchOrderById');
-Route::post('searchOrderByAccount', 'OrdersController@searchOrderByAccount');
-Route::get('searchOrderByBrowser', 'OrdersController@searchOrderByBrowser');
+
 
 // 支付相关
 Route::group(['prefix'=>'pay','namespace' => 'Pay'],function(){

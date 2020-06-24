@@ -9,7 +9,6 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
-use Encore\Admin\Show;
 
 class CardsController extends AdminController
 {
@@ -43,7 +42,6 @@ class CardsController extends AdminController
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
         $grid->filter(function($filter) use ($commodClass){
-
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
             $filter->equal('id', '卡密id');
@@ -51,8 +49,6 @@ class CardsController extends AdminController
             $filter->like('card_info', '卡密内容');
             $filter->equal('product_id', '所属商品')->select($commodClass);
             $filter->equal('card_status', '状态')->select([1 => '未售出', 2 => '已售出']);
-
-
         });
         $grid->actions(function ($actions) {
             $actions->disableView();
@@ -60,11 +56,15 @@ class CardsController extends AdminController
         return $grid;
     }
 
+    /**
+     * 导入卡密.
+     * @param Content $content
+     * @return Content
+     */
     public function importCards(Content $content)
     {
         return $content->body(new ImportCards());
     }
-
 
 
     /**
@@ -93,6 +93,14 @@ class CardsController extends AdminController
             // 去掉`查看`按钮
             $tools->disableView();
         });
+        $form->saved(function (Form $form) {
+            $product_id = $form->model()->product_id;
+            $this->instock = Cards::where(['product_id' => $this->product_id, 'card_status' =>1])->count();
+            Products::where(['id' => $this->product_id])->update(['in_stock' => $this->instock]);
+            $instock = Cards::where(['product_id' => $product_id, 'card_status' => 1])->count();
+            Products::where('id', $product_id)->update(['in_stock' => $instock]);
+        });
         return $form;
     }
+
 }

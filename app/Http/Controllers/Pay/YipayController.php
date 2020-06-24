@@ -12,10 +12,7 @@ class YipayController extends PayController
 
     public function gateway($payway, $oid)
     {
-        $check = $this->checkOrder($payway, $oid);
-        if($check !== true) {
-            return $this->error($check);
-        }
+        $this->checkOrder($payway, $oid);
         //组装支付参数
         $parameter = [
             'pid' =>  (int)$this->payInfo['merchant_id'],

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Pay;
 
 
+use App\Exceptions\AppException;
 use App\Models\Pays;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
@@ -12,10 +13,7 @@ class WepayController extends PayController
 
     public function gateway($payway, $oid)
     {
-        $check = $this->checkOrder($payway, $oid);
-        if($check !== true) {
-            return $this->error($check);
-        }
+        $this->checkOrder($payway, $oid);
         $config = [
             'app_id' => $this->payInfo['merchant_id'],
             'mch_id' => $this->payInfo['merchant_key'],
@@ -42,7 +40,7 @@ class WepayController extends PayController
                     $result['orderid'] = $this->orderInfo['order_id'];
                     return $this->view('static_pages/qrpay', $result);
                 } catch (\Exception $e) {
-                    return $this->error('支付通道异常~ '.$e->getMessage());
+                    throw new AppException('支付通道异常~ '.$e->getMessage());
                 }
                 break;
 
