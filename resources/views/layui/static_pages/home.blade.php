@@ -24,17 +24,17 @@
                                            </div>
                                            <div class="product-class">
                                                @if($product['pd_type'] == 1)
-                                                   <span class="layui-badge layui-bg-green">自动发货</span>
+                                                   <span class="layui-badge layui-bg-green">{{ __('system.automatic_delivery') }}</span>
                                                @else
-                                                   <span class="layui-badge">代充</span>
+                                                   <span class="layui-badge">{{ __('system.charge') }}</span>
                                                @endif
                                                    @if($product['wholesale_price'])
-                                                     <span class="layui-badge layui-bg-orange">折扣</span>
+                                                     <span class="layui-badge layui-bg-orange">{{ __('system.discount') }}</span>
                                                    @endif
                                            </div>
                                            <div class="">
                                                <div class="product-box-price" ><b>￥{{ $product['actual_price'] }}</b></div>
-                                               <div class="product-volume">库存({{ $product['in_stock'] }})</div>
+                                               <div class="product-volume">{{ __('system.in_stock') }}({{ $product['in_stock'] }})</div>
                                            </div>
                                        </div>
 
