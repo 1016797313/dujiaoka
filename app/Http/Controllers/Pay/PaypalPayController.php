@@ -48,7 +48,7 @@ class PaypalPayController extends PayController
         }
         $product = $this->orderInfo['product_name'];
         try {
-            $price = number_format($this->getUsdCurrency($this->orderInfo['actual_price']), 2);
+            $price = number_format($this->getUsdCurrency($this->orderInfo['actual_price']), 2, '.', '');
         } catch (\Exception $exception) {
             throw new AppException($exception->getMessage());
         }

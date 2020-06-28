@@ -22,7 +22,7 @@ class OrderService
                 $wholesalePrice = $wholesale['price'] * $orderNumber;
             }
         }
-        return number_format($wholesalePrice, 2);
+        return number_format($wholesalePrice, 2, '.', '');
     }
 
 }
